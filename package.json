@@ -1,0 +1,40 @@
+{
+  "name": "ShareCoffee.Search",
+  "version": "0.0.1",
+  "description": "Search Addons for ShareCoffee",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ThorstenHans/ShareCoffee.Search.git"
+  },
+  "keywords": [
+    "SharePoint",
+    "Apps",
+    "CoffeeScript",
+    "Search"
+  ],
+  "author": "Thorsten Hans <thorsten.hans@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ThorstenHans/ShareCoffee.Search/issues"
+  },
+  "devDependencies": {
+    "mocha": "~1.13.0",
+    "chai": "~1.8.1",
+    "sinon": "~1.7.3",
+    "grunt": "~0.4.1",
+    "grunt-contrib-coffee": "~0.7.0",
+    "grunt-contrib-copy": "~0.4.1",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-simple-mocha": "~0.4.0",
+    "grunt-contrib-uglify": "~0.2.4",
+    "grunt-nuget": "~0.1.1",
+    "grunt-docco": "~0.3.1"
+  }
+}
