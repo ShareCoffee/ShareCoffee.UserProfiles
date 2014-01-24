@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>ShareCoffee.UserProfiles</id>
+    <version>0.0.1</version>
+    <authors>Thorsten Hans</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>ShareCoffee.UserProfiles - UserProfile Addons for ShareCoffee</description>
+  </metadata>
+  <files>
+    <file src="readme.txt" target="" />
+    <file src="dist\**.*" target="content\Scripts\ShareCoffee.UserProfiles" />
+  </files>
+  <dependencies>
+    <group>
+      <dependency id="ShareCoffee" />
+    </group>
+  </dependencies>
+</package>

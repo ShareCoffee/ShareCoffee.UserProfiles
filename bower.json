@@ -1,0 +1,28 @@
+{
+  "name": "ShareCoffee.UserProfiles",
+  "version": "0.0.1",
+  "homepage": "https://github.com/ThorstenHans/ShareCoffee.UserProfiles",
+  "authors": [
+    "Thorsten Hans <thorsten.hans@gmail.com>"
+  ],
+  "description": "UserProfile Addons for ShareCoffee",
+  "main": "dist/ShareCoffee.UserProfiles.min.js",
+  "keywords": [
+    "SharePoint",
+    "Apps",
+    "CoffeeScript",
+    "ShareCoffee",
+    "UserProfiles"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "ShareCoffee": "latest"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
