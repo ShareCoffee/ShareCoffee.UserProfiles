@@ -6,8 +6,8 @@ if not root.ShareCoffee? or not root.ShareCoffee.REST?
 root.ShareCoffee.Url = {} unless root.ShareCoffee.Url?
 root.ShareCoffee.Url.SetMyProfilePicture = "SP.UserProfiles.PeopleManager/SetMyProfilePicture"
 root.ShareCoffee.Url.GetMyProperties = "SP.UserProfiles.PeopleManager/GetMyProperties"
-root.ShareCoffee.Url.GetPropertiesFor = "SP.UserProfiles.PeopleManager/GetPropertiesFor(accountName=@v)?@v="
-root.ShareCoffee.Url.GetUserProfilePropertyFor = "SP.UserProfiles.PeopleManager/GetUserProfilePropertyFor(accountName=@v, propertyName=@p)?@v=&@p="
+root.ShareCoffee.Url.GetProperties = "SP.UserProfiles.PeopleManager/GetPropertiesFor(accountName=@v)?@v="
+root.ShareCoffee.Url.GetUserProfileProperty = "SP.UserProfiles.PeopleManager/GetUserProfilePropertyFor(accountName=@v, propertyName=@p)?@v=&@p="
 
 root.ShareCoffee.ProfilePictureProperties = class
 
@@ -57,14 +57,12 @@ root.ShareCoffee.UserProfileProperties = class
 
 root.ShareCoffee.REST.UserProfiles =
   build:
-    getMyProfilePicture:
-      for: new ShareCoffee.RESTFactory 'GET'
+    setMyProfilePicture:
+      for: new ShareCoffee.RESTFactory 'POST'
     getMyProperties:
       for: new ShareCoffee.RESTFactory 'GET'
-    updateMyProfilePicture:
-      for: new ShareCoffee.RESTFactory 'POST'
-    getPropertiesForUser:
+    getProperties:
       for: new ShareCoffee.RESTFactory 'GET'
-    getUserProfilePropertyForUser:
+    getUserProfileProperty:
       for: new ShareCoffee.RESTFactory 'GET'
 
