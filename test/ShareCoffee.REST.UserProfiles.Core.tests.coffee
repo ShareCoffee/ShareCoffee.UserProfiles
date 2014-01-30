@@ -29,6 +29,13 @@ describe 'ShareCoffee.REST.UserProfiles.Core', ->
     root.ShareCoffee.REST.should.have.property 'UserProfiles'
     root.ShareCoffee.REST.UserProfiles.should.be.an 'object'
 
+describe 'ShareCoffee.Url', ->
+
+  it 'should expose Url on ShareCoffee', ->
+    ShareCoffee.should.have.property 'Url'
+    ShareCoffee.Url.should.be.an 'object'
+
+
 describe 'UserProfileProperties', ->
 
   it 'should exist as a constructor function on ShareCoffee', ->
@@ -116,21 +123,21 @@ describe 'UserProfileProperties', ->
       actual.should.equal "SP.UserProfiles.PeopleManager/GetMyProperties?$select=Email,AccountName"
 
     it 'should replace AccountName Parameter in url if present', ->
-      sut = new ShareCoffee.UserProfileProperties ShareCoffee.UserProfileUrls.getPropertiesForUserUrl, 'th@dotnet-rocks.de'
+      sut = new ShareCoffee.UserProfileProperties ShareCoffee.Url.GetPropertiesFor, 'th@dotnet-rocks.de'
       actual = sut.getUrl()
       actual.should.equal "SP.UserProfiles.PeopleManager/GetPropertiesFor(accountName=@v)?@v='th@dotnet-rocks.de'"
 
     it 'should throw an Error if AccountName property is required but not existend', ->
-      sut = new ShareCoffee.UserProfileProperties ShareCoffee.UserProfileUrls.getPropertiesForUserUrl
+      sut = new ShareCoffee.UserProfileProperties ShareCoffee.Url.GetUserProfilePropertyFor
       (-> sut.getUrl()).should.throw 'AccountName not specified'
 
     it 'should replace propertyNames Parameter it the url if present', ->
-      sut = new ShareCoffee.UserProfileProperties ShareCoffee.UserProfileUrls.getUserProfilePropertyForUserUrl, 'th@dotnet-rocks.de', null, null, "Title", "Department"
+      sut = new ShareCoffee.UserProfileProperties ShareCoffee.Url.GetUserProfilePropertyFor, 'th@dotnet-rocks.de', null, null, "Title", "Department"
       actual = sut.getUrl()
       actual.should.equal "SP.UserProfiles.PeopleManager/GetUserProfilePropertyFor(accountName=@v, propertyName=@p)?@v='th@dotnet-rocks.de'&@p='Title'"
 
     it 'should throw an error if Property is required but not existing', ->
-      sut = new ShareCoffee.UserProfileProperties ShareCoffee.UserProfileUrls.getUserProfilePropertyForUserUrl, 'th@dotnet-rocks.de'
+      sut = new ShareCoffee.UserProfileProperties ShareCoffee.Url.GetUserProfilePropertyFor, 'th@dotnet-rocks.de'
       (-> sut.getUrl()).should.throw 'PropertyName not specified'
 
 describe 'ProfilePictureProperties', ->
@@ -165,7 +172,7 @@ describe 'ProfilePictureProperties', ->
 
   it "should call RequestProperties constructor when getRequestProperties is called", ->
     spy = sinon.spy ShareCoffee.REST, "RequestProperties"
-    expectedArgs = [ShareCoffee.UserProfileUrls.updateMyProfileProperty, 'foo', null, null,null,null]
+    expectedArgs = [ShareCoffee.Url.GetMyProperties, 'foo', null, null,null,null]
 
     sut = new ShareCoffee.ProfilePictureProperties "foo"
     actual = sut.getRequestProperties()

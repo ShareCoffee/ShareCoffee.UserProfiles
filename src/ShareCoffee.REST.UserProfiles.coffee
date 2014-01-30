@@ -3,17 +3,11 @@ root = global ? window
 if not root.ShareCoffee? or not root.ShareCoffee.REST?
   throw new Error("LoadError")
 
-root.ShareCoffee.UserProfileUrlRoot = "SP.UserProfiles.PeopleManager"
-
-root.ShareCoffee.UserProfileUrls =
-  updateMyProfilePictureUrl :
-    "#{ShareCoffee.UserProfileUrlRoot}/SetMyProfilePicture"
-  getMyPropertiesUrl:
-    "#{ShareCoffee.UserProfileUrlRoot}/GetMyProperties"
-  getPropertiesForUserUrl:
-    "#{ShareCoffee.UserProfileUrlRoot}/GetPropertiesFor(accountName=@v)?@v="
-  getUserProfilePropertyForUserUrl:
-    "#{ShareCoffee.UserProfileUrlRoot}/GetUserProfilePropertyFor(accountName=@v, propertyName=@p)?@v=&@p="
+root.ShareCoffee.Url = {} unless root.ShareCoffee.Url?
+root.ShareCoffee.Url.SetMyProfilePicture = "SP.UserProfiles.PeopleManager/SetMyProfilePicture"
+root.ShareCoffee.Url.GetMyProperties = "SP.UserProfiles.PeopleManager/GetMyProperties"
+root.ShareCoffee.Url.GetPropertiesFor = "SP.UserProfiles.PeopleManager/GetPropertiesFor(accountName=@v)?@v="
+root.ShareCoffee.Url.GetUserProfilePropertyFor = "SP.UserProfiles.PeopleManager/GetUserProfilePropertyFor(accountName=@v, propertyName=@p)?@v=&@p="
 
 root.ShareCoffee.ProfilePictureProperties = class
 
@@ -21,7 +15,7 @@ root.ShareCoffee.ProfilePictureProperties = class
     @profilePicture = null unless @profilePicture?
     @onSuccess = null unless @onSuccess?
     @onError = null unless @onError?
-    @url = ShareCoffee.UserProfileUrls.updateMyProfilePictureUrl
+    @url = ShareCoffee.Url.SetMyProfilePicture
 
   getRequestProperties: () =>
     payload = @profilePicture
@@ -48,7 +42,7 @@ root.ShareCoffee.UserProfileProperties = class
         throw new Error 'PropertyName not specified'
       props = @propertyNames[0] if @propertyNames.length > 0
       url = url.replace '@p=', "@p='#{props}'"
-    if url.indexOf("SP.UserProfiles.PeopleManager/GetMyProperties") > -1 and @propertyNames.length > 0
+    if url.indexOf(ShareCoffee.Url.GetMyProperties) > -1 and @propertyNames.length > 0
       if not @propertyNames? or @propertyNames.length is 0
         throw new Error 'PropertyNames not specified'
       props = ""
