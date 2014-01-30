@@ -4,6 +4,7 @@ if not root.ShareCoffee? or not root.ShareCoffee.REST?
   throw new Error("LoadError")
 
 root.ShareCoffee.UserProfileUrlRoot = "SP.UserProfiles.PeopleManager"
+
 root.ShareCoffee.UserProfileUrls =
   updateMyProfilePictureUrl :
     "#{ShareCoffee.UserProfileUrlRoot}/SetMyProfilePicture"
@@ -28,12 +29,12 @@ root.ShareCoffee.ProfilePictureProperties = class
 
 root.ShareCoffee.UserProfileProperties = class
 
-  constructor: (@accountName, @onSuccess, @onError, @propertyNames...) ->
+  constructor: (@url, @accountName = null, @onSuccess = null, @onError = null, @propertyNames...) ->
     @accountName = null unless @accountName?
     @propertyNames = null unless @propertyNames?
     @onSuccess = null unless @onSuccess?
     @onError = null unless @onError?
-    @url = "" ## TODO
+    @url = null unless @url?
 
   getUrl: () =>
     url = @url
