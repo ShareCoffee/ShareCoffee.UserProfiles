@@ -1,7 +1,7 @@
 {
-  "name": "ShareCoffee.Search",
+  "name": "ShareCoffee.UserProfiles",
   "version": "0.0.1",
-  "description": "Search Addons for ShareCoffee",
+  "description": "UserProfile Addons for ShareCoffee",
   "main": "index.js",
   "directories": {
     "test": "test"
@@ -11,18 +11,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/ThorstenHans/ShareCoffee.Search.git"
+    "url": "git://github.com/ThorstenHans/ShareCoffee.UserProfiles.git"
   },
   "keywords": [
     "SharePoint",
     "Apps",
     "CoffeeScript",
-    "Search"
+    "UserProfiles"
   ],
   "author": "Thorsten Hans <thorsten.hans@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ThorstenHans/ShareCoffee.Search/issues"
+    "url": "https://github.com/ThorstenHans/ShareCoffee.UserProfiles/issues"
   },
   "devDependencies": {
     "mocha": "~1.13.0",
