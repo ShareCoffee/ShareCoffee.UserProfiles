@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>ShareCoffee.REST.UserProfiles.coffee</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="public/stylesheets/normalize.css" />
+  <link rel="stylesheet" media="all" href="sharecoffee.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="page">
+
+      <div class="header">
+        
+          <h1>ShareCoffee.REST.UserProfiles.coffee</h1>
+        
+
+        
+      </div>
+
+      
+        
+        
+        
+          <div class='highlight'><pre>root = <span class="hljs-built_in">global</span> ? <span class="hljs-built_in">window</span>
+
+<span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> root.ShareCoffee? <span class="hljs-keyword">or</span> <span class="hljs-keyword">not</span> root.ShareCoffee.REST?
+  <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> Error(<span class="hljs-string">"LoadError"</span>)
+
+root.ShareCoffee.Url = {} <span class="hljs-keyword">unless</span> root.ShareCoffee.Url?
+root.ShareCoffee.Url.SetMyProfilePicture = <span class="hljs-string">"SP.UserProfiles.PeopleManager/SetMyProfilePicture"</span>
+root.ShareCoffee.Url.GetMyProperties = <span class="hljs-string">"SP.UserProfiles.PeopleManager/GetMyProperties"</span>
+root.ShareCoffee.Url.GetPropertiesFor = <span class="hljs-string">"SP.UserProfiles.PeopleManager/GetPropertiesFor(accountName=@v)?@v="</span>
+root.ShareCoffee.Url.GetUserProfilePropertyFor = <span class="hljs-string">"SP.UserProfiles.PeopleManager/GetUserProfilePropertyFor(accountName=@v, propertyName=@p)?@v=&amp;@p="</span>
+
+root.ShareCoffee.ProfilePictureProperties = <span class="hljs-class"><span class="hljs-keyword">class</span></span>
+
+  <span class="hljs-attribute">constructor</span>: <span class="hljs-function"><span class="hljs-params">(<span class="hljs-property">@profilePicture</span>, <span class="hljs-property">@onSuccess</span>, <span class="hljs-property">@onError</span>)</span> -&gt;</span>
+    <span class="hljs-property">@profilePicture</span> = <span class="hljs-literal">null</span> <span class="hljs-keyword">unless</span> <span class="hljs-property">@profilePicture</span>?
+    <span class="hljs-property">@onSuccess</span> = <span class="hljs-literal">null</span> <span class="hljs-keyword">unless</span> <span class="hljs-property">@onSuccess</span>?
+    <span class="hljs-property">@onError</span> = <span class="hljs-literal">null</span> <span class="hljs-keyword">unless</span> <span class="hljs-property">@onError</span>?
+    <span class="hljs-property">@url</span> = ShareCoffee.Url.SetMyProfilePicture
+
+  <span class="hljs-attribute">getRequestProperties</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span>
+    payload = <span class="hljs-property">@profilePicture</span>
+    <span class="hljs-keyword">new</span> ShareCoffee.REST.RequestProperties <span class="hljs-property">@url</span>, payload, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, <span class="hljs-property">@onSuccess</span>, <span class="hljs-property">@onError</span>
+
+root.ShareCoffee.UserProfileProperties = <span class="hljs-class"><span class="hljs-keyword">class</span></span>
+
+  <span class="hljs-attribute">constructor</span>: <span class="hljs-function"><span class="hljs-params">(<span class="hljs-property">@url</span>, <span class="hljs-property">@accountName</span> = <span class="hljs-literal">null</span>, <span class="hljs-property">@onSuccess</span> = <span class="hljs-literal">null</span>, <span class="hljs-property">@onError</span> = <span class="hljs-literal">null</span>, <span class="hljs-property">@propertyNames</span>...)</span> -&gt;</span>
+    <span class="hljs-property">@accountName</span> = <span class="hljs-literal">null</span> <span class="hljs-keyword">unless</span> <span class="hljs-property">@accountName</span>?
+    <span class="hljs-property">@propertyNames</span> = <span class="hljs-literal">null</span> <span class="hljs-keyword">unless</span> <span class="hljs-property">@propertyNames</span>?
+    <span class="hljs-property">@onSuccess</span> = <span class="hljs-literal">null</span> <span class="hljs-keyword">unless</span> <span class="hljs-property">@onSuccess</span>?
+    <span class="hljs-property">@onError</span> = <span class="hljs-literal">null</span> <span class="hljs-keyword">unless</span> <span class="hljs-property">@onError</span>?
+    <span class="hljs-property">@url</span> = <span class="hljs-literal">null</span> <span class="hljs-keyword">unless</span> <span class="hljs-property">@url</span>?
+
+  <span class="hljs-attribute">getUrl</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span>
+    url = <span class="hljs-property">@url</span>
+    <span class="hljs-keyword">if</span> url.indexOf(<span class="hljs-string">"@v"</span>) &gt; -<span class="hljs-number">1</span>
+      <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> <span class="hljs-property">@accountName</span>?
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> Error <span class="hljs-string">'AccountName not specified'</span>
+      url = url.replace <span class="hljs-string">'@v='</span>, <span class="hljs-string">"@v='<span class="hljs-subst">#{<span class="hljs-property">@accountName</span>}</span>'"</span>
+    <span class="hljs-keyword">if</span> url.indexOf(<span class="hljs-string">"@p"</span>) &gt; -<span class="hljs-number">1</span>
+      props = <span class="hljs-string">"PreferredName"</span>
+      <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> <span class="hljs-property">@propertyNames</span>? <span class="hljs-keyword">or</span> <span class="hljs-property">@propertyNames</span>.length <span class="hljs-keyword">is</span> <span class="hljs-number">0</span>
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> Error <span class="hljs-string">'PropertyName not specified'</span>
+      props = <span class="hljs-property">@propertyNames</span>[<span class="hljs-number">0</span>] <span class="hljs-keyword">if</span> <span class="hljs-property">@propertyNames</span>.length &gt; <span class="hljs-number">0</span>
+      url = url.replace <span class="hljs-string">'@p='</span>, <span class="hljs-string">"@p='<span class="hljs-subst">#{props}</span>'"</span>
+    <span class="hljs-keyword">if</span> url.indexOf(ShareCoffee.Url.GetMyProperties) &gt; -<span class="hljs-number">1</span> <span class="hljs-keyword">and</span> <span class="hljs-property">@propertyNames</span>.length &gt; <span class="hljs-number">0</span>
+      <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> <span class="hljs-property">@propertyNames</span>? <span class="hljs-keyword">or</span> <span class="hljs-property">@propertyNames</span>.length <span class="hljs-keyword">is</span> <span class="hljs-number">0</span>
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> Error <span class="hljs-string">'PropertyNames not specified'</span>
+      props = <span class="hljs-string">""</span>
+      <span class="hljs-keyword">for</span> p <span class="hljs-keyword">in</span> <span class="hljs-property">@propertyNames</span>
+        props += <span class="hljs-string">"<span class="hljs-subst">#{p}</span>,"</span>
+      props = props.substr <span class="hljs-number">0</span>, props.length-<span class="hljs-number">1</span>
+      url = <span class="hljs-string">"<span class="hljs-subst">#{url}</span>?$select=<span class="hljs-subst">#{props}</span>"</span>
+    url
+
+  <span class="hljs-attribute">getRequestProperties</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span>
+    <span class="hljs-keyword">new</span> ShareCoffee.REST.RequestProperties <span class="hljs-property">@getUrl</span>(), <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">null</span>, <span class="hljs-property">@onSuccess</span>, <span class="hljs-property">@onError</span>
+
+root.ShareCoffee.REST.UserProfiles =
+  <span class="hljs-attribute">build</span>:
+    <span class="hljs-attribute">getMyProfilePicture</span>:
+      <span class="hljs-attribute">for</span>: <span class="hljs-keyword">new</span> ShareCoffee.RESTFactory <span class="hljs-string">'GET'</span>
+    <span class="hljs-attribute">getMyProperties</span>:
+      <span class="hljs-attribute">for</span>: <span class="hljs-keyword">new</span> ShareCoffee.RESTFactory <span class="hljs-string">'GET'</span>
+    <span class="hljs-attribute">updateMyProfilePicture</span>:
+      <span class="hljs-attribute">for</span>: <span class="hljs-keyword">new</span> ShareCoffee.RESTFactory <span class="hljs-string">'POST'</span>
+    <span class="hljs-attribute">getPropertiesForUser</span>:
+      <span class="hljs-attribute">for</span>: <span class="hljs-keyword">new</span> ShareCoffee.RESTFactory <span class="hljs-string">'GET'</span>
+    <span class="hljs-attribute">getUserProfilePropertyForUser</span>:
+      <span class="hljs-attribute">for</span>: <span class="hljs-keyword">new</span> ShareCoffee.RESTFactory <span class="hljs-string">'GET'</span></pre></div>
+        
+      
+      <div class="fleur">h</div>
+    </div>
+  </div>
+</body>
+</html>
