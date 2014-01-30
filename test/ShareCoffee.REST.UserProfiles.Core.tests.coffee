@@ -100,6 +100,38 @@ describe 'UserProfileProperties', ->
 
       ShareCoffee.REST.RequestProperties.restore()
 
+    it 'should provide a getUrl method', ->
+      sut = new ShareCoffee.UserProfileProperties()
+      sut.should.have.property 'getUrl'
+      sut.getUrl.should.be.an 'function'
+
+    it 'should return url as it is if common url without parameter is passed', ->
+      sut = new ShareCoffee.UserProfileProperties "url/to/something"
+      actual = sut.getUrl()
+      actual.should.equal 'url/to/something'
+
+    it 'should add REST select query to url when GetMyProperties is called with propertyNames', ->
+      sut = new ShareCoffee.UserProfileProperties "SP.UserProfiles.PeopleManager/GetMyProperties", null, null, null, "Email", "AccountName"
+      actual = sut.getUrl()
+      actual.should.equal "SP.UserProfiles.PeopleManager/GetMyProperties?$select=Email,AccountName"
+
+    it 'should replace AccountName Parameter in url if present', ->
+      sut = new ShareCoffee.UserProfileProperties ShareCoffee.UserProfileUrls.getPropertiesForUserUrl, 'th@dotnet-rocks.de'
+      actual = sut.getUrl()
+      actual.should.equal "SP.UserProfiles.PeopleManager/GetPropertiesFor(accountName=@v)?@v='th@dotnet-rocks.de'"
+
+    it 'should throw an Error if AccountName property is required but not existend', ->
+      sut = new ShareCoffee.UserProfileProperties ShareCoffee.UserProfileUrls.getPropertiesForUserUrl
+      (-> sut.getUrl()).should.throw 'AccountName not specified'
+
+    it 'should replace propertyNames Parameter it the url if present', ->
+      sut = new ShareCoffee.UserProfileProperties ShareCoffee.UserProfileUrls.getUserProfilePropertyForUserUrl, 'th@dotnet-rocks.de', null, null, "Title", "Department"
+      actual = sut.getUrl()
+      actual.should.equal "SP.UserProfiles.PeopleManager/GetUserProfilePropertyFor(accountName=@v, propertyName=@p)?@v='th@dotnet-rocks.de'&@p='Title'"
+
+    it 'should throw an error if Property is required but not existing', ->
+      sut = new ShareCoffee.UserProfileProperties ShareCoffee.UserProfileUrls.getUserProfilePropertyForUserUrl, 'th@dotnet-rocks.de'
+      (-> sut.getUrl()).should.throw 'PropertyName not specified'
 
 describe 'ProfilePictureProperties', ->
 

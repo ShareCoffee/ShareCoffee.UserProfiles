@@ -39,16 +39,22 @@ root.ShareCoffee.UserProfileProperties = class
   getUrl: () =>
     url = @url
     if url.indexOf("@v") > -1
+      if not @accountName?
+        throw new Error 'AccountName not specified'
       url = url.replace '@v=', "@v='#{@accountName}'"
     if url.indexOf("@p") > -1
       props = "PreferredName"
+      if not @propertyNames? or @propertyNames.length is 0
+        throw new Error 'PropertyName not specified'
       props = @propertyNames[0] if @propertyNames.length > 0
-      url = url.replace '@p=', "@p='#{props}"
-    if url.indexOf("GetMyProperties") > -1 and @propertyNames.length > 0
+      url = url.replace '@p=', "@p='#{props}'"
+    if url.indexOf("SP.UserProfiles.PeopleManager/GetMyProperties") > -1 and @propertyNames.length > 0
+      if not @propertyNames? or @propertyNames.length is 0
+        throw new Error 'PropertyNames not specified'
       props = ""
       for p in @propertyNames
         props += "#{p},"
-      props = props.substr 0, props.length
+      props = props.substr 0, props.length-1
       url = "#{url}?$select=#{props}"
     url
 
