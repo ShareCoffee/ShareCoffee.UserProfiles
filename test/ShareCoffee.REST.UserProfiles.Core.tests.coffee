@@ -162,19 +162,19 @@ describe 'UserProfileProperties', ->
       actual = sut.getUrl()
       actual.should.equal "SP.UserProfiles.PeopleManager/GetMyProperties?$select=Email,AccountName"
 
-    it 'should replace AccountName Parameter in url if present', ->
+    it 'should replace AccountName Parameter in url and encode it if present', ->
       sut = new ShareCoffee.UserProfileProperties ShareCoffee.Url.GetProperties, 'th@dotnet-rocks.de'
       actual = sut.getUrl()
-      actual.should.equal "SP.UserProfiles.PeopleManager/GetPropertiesFor(accountName=@v)?@v='th@dotnet-rocks.de'"
+      actual.should.equal "SP.UserProfiles.PeopleManager/GetPropertiesFor(accountName=@v)?@v='th%40dotnet-rocks.de'"
 
     it 'should throw an Error if AccountName property is required but not existend', ->
       sut = new ShareCoffee.UserProfileProperties ShareCoffee.Url.GetUserProfileProperty
       (-> sut.getUrl()).should.throw 'AccountName not specified'
 
-    it 'should replace propertyNames Parameter it the url if present', ->
+    it 'should replace propertyNames Parameter it the url if present (accountName has to be encoded)', ->
       sut = new ShareCoffee.UserProfileProperties ShareCoffee.Url.GetUserProfileProperty, 'th@dotnet-rocks.de', null, null, "Title", "Department"
       actual = sut.getUrl()
-      actual.should.equal "SP.UserProfiles.PeopleManager/GetUserProfilePropertyFor(accountName=@v, propertyName=@p)?@v='th@dotnet-rocks.de'&@p='Title'"
+      actual.should.equal "SP.UserProfiles.PeopleManager/GetUserProfilePropertyFor(accountName=@v, propertyName=@p)?@v='th%40dotnet-rocks.de'&@p='Title'"
 
     it 'should throw an error if Property is required but not existing', ->
       sut = new ShareCoffee.UserProfileProperties ShareCoffee.Url.GetUserProfileProperty, 'th@dotnet-rocks.de'

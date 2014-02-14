@@ -31,8 +31,8 @@
 root.ShareCoffee.Url = {} <span class="hljs-keyword">unless</span> root.ShareCoffee.Url?
 root.ShareCoffee.Url.SetMyProfilePicture = <span class="hljs-string">"SP.UserProfiles.PeopleManager/SetMyProfilePicture"</span>
 root.ShareCoffee.Url.GetMyProperties = <span class="hljs-string">"SP.UserProfiles.PeopleManager/GetMyProperties"</span>
-root.ShareCoffee.Url.GetPropertiesFor = <span class="hljs-string">"SP.UserProfiles.PeopleManager/GetPropertiesFor(accountName=@v)?@v="</span>
-root.ShareCoffee.Url.GetUserProfilePropertyFor = <span class="hljs-string">"SP.UserProfiles.PeopleManager/GetUserProfilePropertyFor(accountName=@v, propertyName=@p)?@v=&amp;@p="</span>
+root.ShareCoffee.Url.GetProperties = <span class="hljs-string">"SP.UserProfiles.PeopleManager/GetPropertiesFor(accountName=@v)?@v="</span>
+root.ShareCoffee.Url.GetUserProfileProperty = <span class="hljs-string">"SP.UserProfiles.PeopleManager/GetUserProfilePropertyFor(accountName=@v, propertyName=@p)?@v=&amp;@p="</span>
 
 root.ShareCoffee.ProfilePictureProperties = <span class="hljs-class"><span class="hljs-keyword">class</span></span>
 
@@ -60,7 +60,7 @@ root.ShareCoffee.UserProfileProperties = <span class="hljs-class"><span class="h
     <span class="hljs-keyword">if</span> url.indexOf(<span class="hljs-string">"@v"</span>) &gt; -<span class="hljs-number">1</span>
       <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> <span class="hljs-property">@accountName</span>?
         <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> Error <span class="hljs-string">'AccountName not specified'</span>
-      url = url.replace <span class="hljs-string">'@v='</span>, <span class="hljs-string">"@v='<span class="hljs-subst">#{<span class="hljs-property">@accountName</span>}</span>'"</span>
+      url = url.replace <span class="hljs-string">'@v='</span>, <span class="hljs-string">"@v='<span class="hljs-subst">#{encodeURIComponent(<span class="hljs-property">@accountName</span>)}</span>'"</span>
     <span class="hljs-keyword">if</span> url.indexOf(<span class="hljs-string">"@p"</span>) &gt; -<span class="hljs-number">1</span>
       props = <span class="hljs-string">"PreferredName"</span>
       <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> <span class="hljs-property">@propertyNames</span>? <span class="hljs-keyword">or</span> <span class="hljs-property">@propertyNames</span>.length <span class="hljs-keyword">is</span> <span class="hljs-number">0</span>
@@ -82,15 +82,13 @@ root.ShareCoffee.UserProfileProperties = <span class="hljs-class"><span class="h
 
 root.ShareCoffee.REST.UserProfiles =
   <span class="hljs-attribute">build</span>:
-    <span class="hljs-attribute">getMyProfilePicture</span>:
-      <span class="hljs-attribute">for</span>: <span class="hljs-keyword">new</span> ShareCoffee.RESTFactory <span class="hljs-string">'GET'</span>
+    <span class="hljs-attribute">setMyProfilePicture</span>:
+      <span class="hljs-attribute">for</span>: <span class="hljs-keyword">new</span> ShareCoffee.RESTFactory <span class="hljs-string">'POST'</span>
     <span class="hljs-attribute">getMyProperties</span>:
       <span class="hljs-attribute">for</span>: <span class="hljs-keyword">new</span> ShareCoffee.RESTFactory <span class="hljs-string">'GET'</span>
-    <span class="hljs-attribute">updateMyProfilePicture</span>:
-      <span class="hljs-attribute">for</span>: <span class="hljs-keyword">new</span> ShareCoffee.RESTFactory <span class="hljs-string">'POST'</span>
-    <span class="hljs-attribute">getPropertiesForUser</span>:
+    <span class="hljs-attribute">getProperties</span>:
       <span class="hljs-attribute">for</span>: <span class="hljs-keyword">new</span> ShareCoffee.RESTFactory <span class="hljs-string">'GET'</span>
-    <span class="hljs-attribute">getUserProfilePropertyForUser</span>:
+    <span class="hljs-attribute">getUserProfileProperty</span>:
       <span class="hljs-attribute">for</span>: <span class="hljs-keyword">new</span> ShareCoffee.RESTFactory <span class="hljs-string">'GET'</span></pre></div>
         
       

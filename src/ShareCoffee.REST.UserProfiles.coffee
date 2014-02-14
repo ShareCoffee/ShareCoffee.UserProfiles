@@ -35,7 +35,7 @@ root.ShareCoffee.UserProfileProperties = class
     if url.indexOf("@v") > -1
       if not @accountName?
         throw new Error 'AccountName not specified'
-      url = url.replace '@v=', "@v='#{@accountName}'"
+      url = url.replace '@v=', "@v='#{encodeURIComponent(@accountName)}'"
     if url.indexOf("@p") > -1
       props = "PreferredName"
       if not @propertyNames? or @propertyNames.length is 0

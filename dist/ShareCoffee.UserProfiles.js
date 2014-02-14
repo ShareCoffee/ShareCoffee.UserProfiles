@@ -23,9 +23,9 @@ ShareCoffee.UserProfiles (c) 2014 Thorsten Hans
 
   root.ShareCoffee.Url.GetMyProperties = "SP.UserProfiles.PeopleManager/GetMyProperties";
 
-  root.ShareCoffee.Url.GetPropertiesFor = "SP.UserProfiles.PeopleManager/GetPropertiesFor(accountName=@v)?@v=";
+  root.ShareCoffee.Url.GetProperties = "SP.UserProfiles.PeopleManager/GetPropertiesFor(accountName=@v)?@v=";
 
-  root.ShareCoffee.Url.GetUserProfilePropertyFor = "SP.UserProfiles.PeopleManager/GetUserProfilePropertyFor(accountName=@v, propertyName=@p)?@v=&@p=";
+  root.ShareCoffee.Url.GetUserProfileProperty = "SP.UserProfiles.PeopleManager/GetUserProfilePropertyFor(accountName=@v, propertyName=@p)?@v=&@p=";
 
   root.ShareCoffee.ProfilePictureProperties = (function() {
     function _Class(profilePicture, onSuccess, onError) {
@@ -90,7 +90,7 @@ ShareCoffee.UserProfiles (c) 2014 Thorsten Hans
         if (this.accountName == null) {
           throw new Error('AccountName not specified');
         }
-        url = url.replace('@v=', "@v='" + this.accountName + "'");
+        url = url.replace('@v=', "@v='" + (encodeURIComponent(this.accountName)) + "'");
       }
       if (url.indexOf("@p") > -1) {
         props = "PreferredName";
@@ -128,19 +128,16 @@ ShareCoffee.UserProfiles (c) 2014 Thorsten Hans
 
   root.ShareCoffee.REST.UserProfiles = {
     build: {
-      getMyProfilePicture: {
-        "for": new ShareCoffee.RESTFactory('GET')
+      setMyProfilePicture: {
+        "for": new ShareCoffee.RESTFactory('POST')
       },
       getMyProperties: {
         "for": new ShareCoffee.RESTFactory('GET')
       },
-      updateMyProfilePicture: {
-        "for": new ShareCoffee.RESTFactory('POST')
-      },
-      getPropertiesForUser: {
+      getProperties: {
         "for": new ShareCoffee.RESTFactory('GET')
       },
-      getUserProfilePropertyForUser: {
+      getUserProfileProperty: {
         "for": new ShareCoffee.RESTFactory('GET')
       }
     }
