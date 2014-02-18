@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "ShareCoffee.UserProfiles.js",
+  "sourceRoot": "",
+  "sources": [
+    "ShareCoffee.UserProfiles.src.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA;;;;CAAA;CAAA;CAAA;CAAA,GAAA,EAAA;;CAAA,CAKA,CAAO,CAAP,EALA;;CAOA,CAAA,EAAO,sBAAJ,KAAH;CACE,GAAU,CAAA,KAAA,CAAA;IARZ;;CAAA,CAUA,CAAqC,CAAjC,OAAY,CAAhB;CAVA"
+}
