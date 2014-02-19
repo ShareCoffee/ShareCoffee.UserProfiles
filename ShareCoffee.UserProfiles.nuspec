@@ -6,14 +6,14 @@
     <authors>Thorsten Hans</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>ShareCoffee.UserProfiles - UserProfile Addons for ShareCoffee</description>
+    <dependencies>
+    <group>
+      <dependency id="ShareCoffee" />
+    </group>
+  </dependencies>
   </metadata>
   <files>
     <file src="readme.txt" target="" />
     <file src="dist\**.*" target="content\Scripts\ShareCoffee.UserProfiles" />
   </files>
-  <dependencies>
-    <group>
-      <dependency id="ShareCoffee" />
-    </group>
-  </dependencies>
 </package>
