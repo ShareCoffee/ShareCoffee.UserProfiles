@@ -3,6 +3,9 @@
   <metadata>
     <id>ShareCoffee.UserProfiles</id>
     <version>0.0.1</version>
+    <title>ShareCoffee.UserProfiles</title>
+    <projectUrl>https://github.com/ThorstenHans/ShareCoffee.UserProfiles</projectUrl>
+    <tags>SharePoint Apps JavaScript CoffeeScript TypeScript Office365 SPO REST CSOM JSOM UserProfiles</tags>
     <authors>Thorsten Hans</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>ShareCoffee.UserProfiles - UserProfile Addons for ShareCoffee</description>
