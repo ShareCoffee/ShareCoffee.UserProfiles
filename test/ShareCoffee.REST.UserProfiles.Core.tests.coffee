@@ -8,11 +8,9 @@ root = global ? window
 describe 'ShareCoffee.REST.UserProfiles.Core', ->
 
   it 'should throw an loadError when ShareCoffee is not loaded', ->
-    (-> require('../src/ShareCoffee.REST.UserProfiles')).should.throw ''
+    (-> require('../src/ShareCoffee.UserProfiles')).should.throw ''
 
-
-
-describe 'ShareCoffee.REST.UserProfiles.Core', ->
+describe 'ShareCoffee.Url', ->
 
   before () ->
     #Fake that ShareCoffee has been loaded
@@ -23,53 +21,7 @@ describe 'ShareCoffee.REST.UserProfiles.Core', ->
       RESTFactory: (method) ->
         {method: method}
 
-    require '../src/ShareCoffee.REST.UserProfiles'
-
-  it 'should register a UserProfiles subnamespace on ShareCoffee.REST', ->
-    root.ShareCoffee.REST.should.have.property 'UserProfiles'
-    root.ShareCoffee.REST.UserProfiles.should.be.an 'object'
-
-  it 'should expose a build property on UserProfiles', ->
-    ShareCoffee.REST.UserProfiles.should.have.property 'build'
-    ShareCoffee.REST.UserProfiles.build.should.be.an 'object'
-
-
-  it 'should expose all available REST methods on build', ->
-    sut = ShareCoffee.REST.UserProfiles.build
-    sut.should.have.property 'setMyProfilePicture'
-    sut.should.have.property 'getMyProperties'
-    sut.should.have.property 'getProperties'
-    sut.should.have.property 'getUserProfileProperty'
-
-    sut.setMyProfilePicture.should.be.an 'object'
-    sut.getMyProperties.should.be.an 'object'
-    sut.getProperties.should.be.an 'object'
-    sut.getUserProfileProperty.should.be.an 'object'
-
-  it 'should expose a for object on all REST methods', ->
-    sut = ShareCoffee.REST.UserProfiles.build
-    sut.setMyProfilePicture.should.have.property 'for'
-    sut.setMyProfilePicture.for.should.be.an 'object'
-    sut.getMyProperties.should.have.property 'for'
-    sut.getMyProperties.for.should.be.an 'object'
-    sut.getProperties.should.have.property 'for'
-    sut.getProperties.for.should.be.an 'object'
-    sut.getUserProfileProperty.should.have.property 'for'
-    sut.getUserProfileProperty.for.should.be.an 'object'
-
-  it 'should create a new instance of RESTFactory when for is accesed using correct HttpVerb', ->
-
-    sut = ShareCoffee.REST.UserProfiles.build
-    actual = sut.setMyProfilePicture.for
-    actual.method.should.equal 'POST'
-    actual = sut.getMyProperties.for
-    actual.method.should.equal 'GET'
-    actual = sut.getProperties.for
-    actual.method.should.equal 'GET'
-    actual = sut.getUserProfileProperty.for
-    actual.method.should.equal 'GET'
-
-describe 'ShareCoffee.Url', ->
+    require '../src/ShareCoffee.UserProfiles'
 
   it 'should expose Url on ShareCoffee', ->
     ShareCoffee.should.have.property 'Url'

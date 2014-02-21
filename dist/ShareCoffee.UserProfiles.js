@@ -126,23 +126,6 @@ ShareCoffee.UserProfiles (c) 2014 Thorsten Hans
 
   })();
 
-  root.ShareCoffee.REST.UserProfiles = {
-    build: {
-      setMyProfilePicture: {
-        "for": new ShareCoffee.RESTFactory('POST')
-      },
-      getMyProperties: {
-        "for": new ShareCoffee.RESTFactory('GET')
-      },
-      getProperties: {
-        "for": new ShareCoffee.RESTFactory('GET')
-      },
-      getUserProfileProperty: {
-        "for": new ShareCoffee.RESTFactory('GET')
-      }
-    }
-  };
-
 }).call(this);
 
 /*
